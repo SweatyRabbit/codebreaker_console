@@ -2,6 +2,7 @@
 
 RSpec.describe GameController do
   subject(:console) { described_class.new }
+
   describe '#check if all statements are valid in game' do
     before do
       allow(console).to receive(:exit)
