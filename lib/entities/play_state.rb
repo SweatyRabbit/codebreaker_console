@@ -18,6 +18,8 @@ class PlayState
     end
   end
 
+  private
+
   def start_guess
     show_menu
     guess = gets.chomp

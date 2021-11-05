@@ -18,6 +18,8 @@ class GameController
     end
   end
 
+  private
+
   def user_command
     puts I18n.t(:menu)
     gets.chomp
