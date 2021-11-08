@@ -28,24 +28,34 @@ RSpec.describe PlayState do
       allow(I18n).to receive(:t)
     end
 
-    it 'will not raise an error if code is valid' do
-      allow(game).to receive(:gets).and_return(code)
-      allow(game).to receive(:show_menu)
-      expect(game).to receive(:guess_number)
-      game.start
+    context '#will use user`s attempt' do
+      before do
+        allow(game).to receive(:gets).and_return(code)
+        allow(game).to receive(:show_menu)
+      end
+
+      it 'will not raise an error if code is valid' do
+        expect(game).to receive(:guess_number)
+        game.start
+      end
     end
 
-    it 'will not raise an error if hint is used' do
-      allow(game).to receive(:gets).and_return('hint')
-      expect(I18n).to receive(:t)
-      game.start
+    context '#when user type hint' do
+      before { allow(game).to receive(:gets).and_return('hint') }
+
+      it 'show hint code to user' do
+        expect(I18n).to receive(:t)
+        game.start
+      end
     end
 
     context '#user win' do
-      before { game.game.instance_variable_set(:@secret_code, [1, 2, 3, 4]) }
-
-      it 'will not raise an error if user has won' do
+      before do
+        game.game.instance_variable_set(:@secret_code, [1, 2, 3, 4])
         allow(game).to receive(:gets).and_return(code)
+      end
+
+      it 'stop game if user win' do
         expect(game).to receive(:exit)
         game.start
       end
@@ -53,26 +63,32 @@ RSpec.describe PlayState do
 
     context '#user lose' do
       before do
+        allow(game).to receive(:gets).and_return(code)
         game.game.instance_variable_set(:@user_attempts, 0)
       end
 
-      it 'user will lose if his attempts will be equal to zero' do
-        allow(game).to receive(:gets).and_return(code)
+      it 'stop game if user lose' do
         expect(game).to receive(:exit)
         game.start
       end
     end
 
-    it "will close the game if enter type 'exit'" do
-      allow(game).to receive(:gets).and_return('exit')
-      expect(game).to receive(:exit)
-      game.start
+    context '#when user type close' do
+      before { allow(game).to receive(:gets).and_return('exit') }
+
+      it "will close the game if enter type 'exit'" do
+        expect(game).to receive(:exit)
+        game.start
+      end
     end
 
-    it 'when user don`t win and lose' do
-      allow(game).to receive(:gets).and_return(code)
-      expect(game).to receive(:back_to_start)
-      game.start
+    context '#user didn`t guess the number' do
+      before { allow(game).to receive(:gets).and_return(code) }
+
+      it 'will ask user to write number again' do
+        expect(game).to receive(:back_to_start)
+        game.start
+      end
     end
   end
 
