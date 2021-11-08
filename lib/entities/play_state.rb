@@ -18,10 +18,18 @@ class PlayState
     end
   end
 
+  private
+
+  def show_menu
+    puts I18n.t(:guess_code)
+    puts I18n.t(:hint_message, hints: @game.user_hints)
+    puts I18n.t(:exit_message)
+  end
+
   def start_guess
     show_menu
     guess = gets.chomp
-    return guess_number(guess) if guess !~ /\D/
+    return guess_number(guess) if guess_has_only_humber?(guess)
 
     guess
   rescue CodebreakerGem::Error::InputRange, CodebreakerGem::Error::MaxStringLength => e
@@ -29,10 +37,8 @@ class PlayState
     retry
   end
 
-  def show_menu
-    puts I18n.t(:guess_code)
-    puts I18n.t(:hint_command, hint: @game.user_hints)
-    puts I18n.t(:exit_message)
+  def guess_has_only_humber?(guess)
+    guess !~ /\D/
   end
 
   def guess_number(guess)
@@ -42,12 +48,14 @@ class PlayState
     elsif @game.lose?
       lose
     else
-      start
+      back_to_start
     end
   end
 
   def use_hint
-    puts I18n.t(:hint_code, hint: @game.use_hint) if @game.user_hints.positive?
+    return puts I18n.t(:hint_code, hint: @game.use_hint) if @game.user_hints.positive?
+
+    puts I18n.t(:no_hint_message)
   end
 
   def win
@@ -59,5 +67,9 @@ class PlayState
   def lose
     puts I18n.t(:lose_message, code: @game.secret_code.join.to_s)
     exit
+  end
+
+  def back_to_start
+    start
   end
 end

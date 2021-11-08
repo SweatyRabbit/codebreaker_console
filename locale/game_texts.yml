@@ -25,8 +25,8 @@ en:
   leave_message: "Goodbye! Type 'y' to exit"
   win_message: "Congratulations, you won!"
   lose_message: "Game over, you lose! The code was: %{code}"
-  hint_command: "You can type 'hint' to find out one number from secret code. Hint amount %{hint}"
-  users_stistic_head: 'Users statistic:'
+  hint_command: "Hint left %{hint}"
+  users_statistic_head: 'Users statistic:'
   users_statistic: |+
                     Rating: %{rating}
                     User`s name: %{name}
@@ -51,3 +51,5 @@ en:
   empty_users_statistic: 'Users statistic is empty!'
   wrong_command_for_guess: "You enter the wrong command or your guess number has letters. Try again!"
   hint_code: 'Hint number is: %{hint}'
+  hint_message: "You can type 'hint' to find out one number from secret code. Hints left: %{hints}"
+  no_hint_message: 'Your hints are over.'

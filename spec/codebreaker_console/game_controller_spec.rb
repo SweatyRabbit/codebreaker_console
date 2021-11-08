@@ -3,71 +3,64 @@
 RSpec.describe GameController do
   subject(:console) { described_class.new }
 
+  let(:playstate) { instance_double(PlayState) }
+
   describe '#check if all statements are valid in game' do
     before do
       allow(console).to receive(:exit)
       allow(console).to receive(:loop).and_yield
-      allow(I18n).to receive(:t)
+      allow(I18n).to receive(:t).with(:menu)
     end
 
     it 'will start the game if user will write the correct command' do
-      allow(console).to receive(:gets).and_return('start')
-      expect(console).to receive(:start_game)
+      allow(I18n).to receive(:t)
+      allow(console).to receive(:gets).and_return('start', 'Ivan', 'asy', 'Ivan', 'easy')
+      allow(PlayState).to receive(:new).and_return(playstate)
+      expect(playstate).to receive(:start)
       console.show_menu
     end
 
     it 'will show users statistic if user will write the correct command' do
+      allow(I18n).to receive(:t)
       allow(console).to receive(:gets).and_return('stats')
-      expect(console).to receive(:show_statistic)
+      expect(console).to receive(:back_to_menu)
       console.show_menu
     end
 
     it 'will show wrong command message if user enter wrong command' do
       allow(console).to receive(:gets).and_return('dsadsa')
-      expect(console).to receive(:wrong_command)
+      expect(I18n).to receive(:t).with(:wrong_command)
       console.show_menu
     end
 
     it 'will show goodbye message from game if user enter exit' do
-      allow(console).to receive(:gets).and_return('exit')
-      expect(console).to receive(:exit_command)
+      allow(console).to receive(:gets).and_return('exit', 'y')
+      expect(I18n).to receive(:t).with(:leave_message)
       console.show_menu
     end
 
     it 'will show rules for user' do
       allow(console).to receive(:gets).and_return('rules')
-      expect(console).to receive(:show_rules)
+      expect(I18n).to receive(:t).with(:rules)
       console.show_menu
     end
 
-    it 'wrong command message' do
-      expect(console).to receive(:show_menu)
-      console.wrong_command
-    end
+    context '#empty db' do
 
-    it 'rules message' do
-      expect(console).to receive(:show_menu)
-      console.show_rules
-    end
+      let(:initialized_path) { 'db' }
+      let(:initialized_file) { 'database.yml' }
 
-    it 'exit from game' do
-      allow(console).to receive(:gets).and_return('y')
-      expect(console).to receive(:exit)
-      console.exit_command
-    end
+      before do
+        File.delete(File.join(initialized_path, initialized_file))
+        Dir.rmdir(initialized_path)
+      end
 
-    let(:playstate) { instance_double(PlayState) }
-
-    it 'start the game if user enter right name and difficulty' do
-      allow(console).to receive(:gets).and_return('Ivan', 'easy')
-      allow(PlayState).to receive(:new).with('Ivan', 'easy').and_return(playstate)
-      expect(playstate).to receive(:start)
-      console.start_game
-    end
-
-    it 'show statistic' do
-      expect(console).to receive(:show_menu)
-      console.show_statistic
+      it 'will show empty users statistic message' do
+        allow(I18n).to receive(:t)
+        allow(console).to receive(:gets).and_return('stats')
+        expect(console).to receive(:back_to_menu)
+        console.show_menu
+      end
     end
   end
 end

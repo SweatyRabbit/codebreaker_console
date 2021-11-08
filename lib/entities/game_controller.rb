@@ -11,32 +11,23 @@ class GameController
       case command.downcase
       when 'start' then start_game
       when 'stats' then show_statistic
-      when 'rules' then show_rules
+      when 'rules' then puts I18n.t(:rules)
       when 'exit' then exit_command
-      else wrong_command
+      else puts I18n.t(:wrong_command)
       end
     end
   end
+
+  private
 
   def user_command
     puts I18n.t(:menu)
     gets.chomp
   end
 
-  def wrong_command
-    puts I18n.t(:wrong_command)
-    show_menu
-  end
-
-  def show_rules
-    puts I18n.t(:rules)
-    show_menu
-  end
-
   def exit_command
     puts I18n.t(:leave_message)
-    quit = gets.chomp
-    exit if quit == 'y'
+    exit if gets.chomp == 'y'
   end
 
   def start_game
@@ -54,17 +45,17 @@ class GameController
     stats = CodebreakerGem::Entities::Game.users_statistic
     return empty_statistic if stats.empty?
 
+    puts I18n.t(:users_statistic_head)
     formated_state = stats.map.each_with_index do |stat, index|
       I18n.t(:users_statistic, **stats_to_hash(index, stat))
     end
-    puts I18n.t(:users_stistic_head)
     puts formated_state
-    show_menu
+    back_to_menu
   end
 
   def empty_statistic
     puts I18n.t(:empty_users_statistic)
-    show_menu
+    back_to_menu
   end
 
   def stats_to_hash(index, stat)
@@ -77,5 +68,9 @@ class GameController
       used_hints: stat.hints,
       total_hints: stat.difficulty.hints
     }
+  end
+
+  def back_to_menu
+    show_menu
   end
 end

@@ -7,11 +7,17 @@ RSpec.describe PlayState do
   let(:difficulty) { 'easy' }
   let(:code) { '1234' }
 
-  describe '#test with show menu' do
-    it 'will nor raise an error if class is created successfully' do
+  describe '#empty hints' do
+    before do
       allow(game).to receive(:loop).and_yield
-      allow(I18n).to receive(:t)
-      game.show_menu
+      allow(game).to receive(:show_menu)
+      allow(game).to receive(:gets).and_return('hint')
+      game.game.instance_variable_set(:@user_hints, 0)
+    end
+
+    it 'show message for empty hints' do
+      expect(I18n).to receive(:t)
+      game.start
     end
   end
 
@@ -19,30 +25,28 @@ RSpec.describe PlayState do
     before do
       allow(game).to receive(:exit)
       allow(game).to receive(:loop).and_yield
-      allow(game).to receive(:show_menu)
       allow(I18n).to receive(:t)
     end
 
     it 'will not raise an error if code is valid' do
       allow(game).to receive(:gets).and_return(code)
+      allow(game).to receive(:show_menu)
       expect(game).to receive(:guess_number)
       game.start
     end
 
     it 'will not raise an error if hint is used' do
       allow(game).to receive(:gets).and_return('hint')
-      expect(game).to receive(:use_hint)
+      expect(I18n).to receive(:t)
       game.start
     end
 
     context '#user win' do
-      before do
-        game.game.instance_variable_set(:@secret_code, [1, 2, 3, 4])
-      end
+      before { game.game.instance_variable_set(:@secret_code, [1, 2, 3, 4]) }
 
       it 'will not raise an error if user has won' do
         allow(game).to receive(:gets).and_return(code)
-        expect(game).to receive(:win)
+        expect(game).to receive(:exit)
         game.start
       end
     end
@@ -54,7 +58,7 @@ RSpec.describe PlayState do
 
       it 'user will lose if his attempts will be equal to zero' do
         allow(game).to receive(:gets).and_return(code)
-        expect(game).to receive(:lose)
+        expect(game).to receive(:exit)
         game.start
       end
     end
@@ -66,38 +70,21 @@ RSpec.describe PlayState do
     end
 
     it 'when user don`t win and lose' do
-      expect(game).to receive(:start)
-      game.guess_number(code)
-    end
-  end
-
-  describe '#show win and lose message' do
-    it 'win message' do
-      expect(game).to receive(:exit)
-      game.win
-    end
-
-    it 'lose message' do
-      expect(game).to receive(:exit)
-      game.lose
-    end
-  end
-
-  describe '#show hint number for user' do
-    it 'hint number' do
-      game.use_hint
+      allow(game).to receive(:gets).and_return(code)
+      expect(game).to receive(:back_to_start)
+      game.start
     end
   end
 
   describe '#will ask user to write right number' do
-    before '#raise error' do
+    before do
       allow(game).to receive(:loop).and_yield
       allow(game).to receive(:gets).and_return('123')
       allow(game).to receive(:show_menu)
     end
 
     it 'will raise error if code is not valid' do
-      game.start_guess
+      game.start
       expect { game }.to raise_error
     end
   end
