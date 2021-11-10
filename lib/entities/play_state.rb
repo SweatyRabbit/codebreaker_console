@@ -48,7 +48,7 @@ class PlayState
     elsif @game.lose?
       lose
     else
-      back_to_start
+      start
     end
   end
 
@@ -67,9 +67,5 @@ class PlayState
   def lose
     puts I18n.t(:lose_message, code: @game.secret_code.join.to_s)
     exit
-  end
-
-  def back_to_start
-    start
   end
 end

@@ -7,8 +7,7 @@ class GameController
 
   def show_menu
     loop do
-      command = user_command
-      case command.downcase
+      case user_command.downcase
       when 'start' then start_game
       when 'stats' then show_statistic
       when 'rules' then puts I18n.t(:rules)
@@ -50,12 +49,10 @@ class GameController
       I18n.t(:users_statistic, **stats_to_hash(index, stat))
     end
     puts formated_state
-    back_to_menu
   end
 
   def empty_statistic
     puts I18n.t(:empty_users_statistic)
-    back_to_menu
   end
 
   def stats_to_hash(index, stat)
@@ -68,9 +65,5 @@ class GameController
       used_hints: stat.hints,
       total_hints: stat.difficulty.hints
     }
-  end
-
-  def back_to_menu
-    show_menu
   end
 end
