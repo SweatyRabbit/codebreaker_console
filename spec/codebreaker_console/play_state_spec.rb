@@ -31,9 +31,7 @@ RSpec.describe PlayState do
     end
 
     context 'when usee use attempt' do
-      before do
-        allow(game).to receive(:gets).and_return(code)
-      end
+      before { allow(game).to receive(:gets).and_return(code) }
 
       it 'will not raise an error if code is valid' do
         expect(game).to receive(:guess_number)
