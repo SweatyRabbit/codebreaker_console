@@ -7,9 +7,7 @@ RSpec.describe PlayState do
   let(:difficulty) { 'easy' }
   let(:code) { '1234' }
 
-  before do
-    allow(game).to receive(:loop).and_yield
-  end
+  before { allow(game).to receive(:loop).and_yield }
 
   describe '#empty hints' do
     before do
