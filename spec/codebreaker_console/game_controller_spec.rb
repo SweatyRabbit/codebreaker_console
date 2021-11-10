@@ -21,14 +21,15 @@ RSpec.describe GameController do
 
     context 'when user type stats' do
       context 'when db is not empty' do
-        let(:stats) {{rating: 1,
-                      name: 'Ivan',
-                      difficulty: 'easy',
-                      used_attempts: '3',
-                      total_attempts: '15',
-                      used_hints: '1',
-                      total_hints: '2'
-                    }}
+        let(:stats) do
+          { rating: 1,
+            name: 'Ivan',
+            difficulty: 'easy',
+            used_attempts: '3',
+            total_attempts: '15',
+            used_hints: '1',
+            total_hints: '2' }
+        end
 
         before do
           allow(console).to receive(:gets).and_return('stats')
