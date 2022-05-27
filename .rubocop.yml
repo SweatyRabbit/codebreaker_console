@@ -11,4 +11,4 @@ Layout/LineLength:
 Metrics/BlockLength:
   Exclude:
     - 'spec/codebreaker_console/play_state_spec.rb'
-    - 'spec/codebreaker_console/game_controller.rb'
+    - 'spec/codebreaker_console/game_controller_spec.rb'

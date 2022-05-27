@@ -1,23 +1,16 @@
-example_id                           | status  | run_time        |
------------------------------------- | ------- | --------------- |
-./spec/game_controller_spec.rb[1:1]  | passed  | 0.00668 seconds |
-./spec/game_controller_spec.rb[1:2]  | passed  | 0.00167 seconds |
-./spec/game_controller_spec.rb[1:3]  | passed  | 0.00174 seconds |
-./spec/game_controller_spec.rb[1:4]  | passed  | 0.00221 seconds |
-./spec/game_controller_spec.rb[1:5]  | passed  | 0.00217 seconds |
-./spec/game_controller_spec.rb[1:6]  | passed  | 0.84983 seconds |
-./spec/game_controller_spec.rb[1:7]  | unknown |                 |
-./spec/game_controller_spec.rb[1:8]  | unknown |                 |
-./spec/game_controller_spec.rb[1:9]  | passed  | 0.01664 seconds |
-./spec/game_controller_spec.rb[1:10] | passed  | 2.33 seconds    |
-./spec/play_state_spec.rb[1:1:1]     | passed  | 0.00141 seconds |
-./spec/play_state_spec.rb[1:2:1]     | passed  | 0.01235 seconds |
-./spec/play_state_spec.rb[1:2:2]     | failed  | 0.0213 seconds  |
-./spec/play_state_spec.rb[1:2:3:1]   | unknown |                 |
-./spec/play_state_spec.rb[1:2:4:1]   | passed  | 0.252 seconds   |
-./spec/play_state_spec.rb[1:2:5]     | unknown |                 |
-./spec/play_state_spec.rb[1:2:6]     | passed  | 0.4078 seconds  |
-./spec/play_state_spec.rb[1:3:1]     | passed  | 0.04504 seconds |
-./spec/play_state_spec.rb[1:3:2]     | passed  | 0.0012 seconds  |
-./spec/play_state_spec.rb[1:4:1]     | failed  | 0.00139 seconds |
-./spec/play_state_spec.rb[1:5:1]     | failed  | 0.02329 seconds |
+example_id                                                    | status  | run_time        |
+------------------------------------------------------------- | ------- | --------------- |
+./spec/codebreaker_console/game_controller_spec.rb[1:1:1]     | passed  | 0.00764 seconds |
+./spec/codebreaker_console/game_controller_spec.rb[1:1:2:1:1] | failed  | 0.01259 seconds |
+./spec/codebreaker_console/game_controller_spec.rb[1:1:2:2:1] | passed  | 0.00924 seconds |
+./spec/codebreaker_console/game_controller_spec.rb[1:1:3:1]   | unknown |                 |
+./spec/codebreaker_console/game_controller_spec.rb[1:1:4:1]   | unknown |                 |
+./spec/codebreaker_console/game_controller_spec.rb[1:1:5:1]   | unknown |                 |
+./spec/codebreaker_console/play_state_spec.rb[1:1:1]          | failed  | 0.00809 seconds |
+./spec/codebreaker_console/play_state_spec.rb[1:2:1:1]        | passed  | 0.00898 seconds |
+./spec/codebreaker_console/play_state_spec.rb[1:2:2:1]        | passed  | 0.00675 seconds |
+./spec/codebreaker_console/play_state_spec.rb[1:2:3:1]        | unknown |                 |
+./spec/codebreaker_console/play_state_spec.rb[1:2:4:1]        | unknown |                 |
+./spec/codebreaker_console/play_state_spec.rb[1:2:5:1]        | unknown |                 |
+./spec/codebreaker_console/play_state_spec.rb[1:2:6:1]        | passed  | 0.00648 seconds |
+./spec/codebreaker_console/play_state_spec.rb[1:3:1]          | passed  | 12.22 seconds   |
